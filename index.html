@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Решение алгоритмической задачи</title>
+  </head>
+  <body>
+    <h1>Задача: Можно ли из бревна выпилить квадратный брус?</h1>
+    <form
+      id="taskForm"
+      action="https://www.bing.com/search?"
+      name="taskForm"
+      target="_blank"
+    >
+      <li>для поисковика:<input name="q" value="search" /></li>
+      <li>
+        формулировка задачи
+        <input
+          name="formulation"
+          value="Можно ли из бревна, имеющего диаметр поперечного сечения D, выпилить квадратный брус шириной A?"
+        />
+      </li>
+      <label for="diameter">Диаметр бревна (D):</label>
+      <input type="number" id="diameter" name="diameter" required /><br />
+
+      <label for="width">Ширина квадратного бруса (A):</label>
+      <input type="number" id="width" name="width" required /><br />
+      <li>результат решения: <input name="result" value="не определен" /></li>
+      <input type="submit" id="verify" value="Проверить" />
+      <input id="send" id="send" type="button" value="Отправить" />
+    </form>
+    <p id="result">Результаты вычислений:</p>
+
+    <script>
+      function submit() {
+        document
+          .getElementById("taskForm")
+          .addEventListener("submit", function (e) {
+            e.preventDefault();
+
+            const diameter = parseFloat(
+              document.getElementById("diameter").value
+            );
+            const width = parseFloat(document.getElementById("width").value);
+            if (isSquareBeamPossible(diameter, width)) {
+              result = "Можно выпилить квадратный брус.";
+              //   "Можно выпилить квадратный брус.";
+              console.log(document.getElementById("result"));
+              document.getElementById("result").innerText =
+                messageText + result;
+              console.log(document.getElementById("result"));
+              document.getElementsByName("result")[0].value = result;
+              check = true;
+            } else {
+              result = "Нельзя выпилить квадратный брус.";
+              //   "Нельзя выпилить квадратный брус.";
+              document.getElementById("result").innerText =
+                messageText + result;
+              document.getElementsByName("result")[0].value = result;
+              check = false;
+            }
+          });
+      }
+
+      function isSquareBeamPossible(D, A) {
+        return A <= D;
+      }
+
+      function send() {
+        if (check) {
+          let textCondition = document.getElementsByTagName("h1")[0].innerText;
+          document.getElementsByName("formulation")[0].value = textCondition;
+          document.getElementsByName("result")[0].value = result;
+          console.log(document.getElementsByName("result")[0].value);
+          document.getElementById("taskForm").submit();
+        } else {
+          alert("Есть недостатки. Повторите ввод");
+        }
+      }
+
+      function submit_send() {
+        submit();
+        send();
+      }
+      let messageText = document.getElementById("result").innerText;
+      const elementSend = document.getElementById("send");
+      elementSend.addEventListener("click", send);
+
+      let result;
+      let check = false;
+
+      const elementDiameter = document.getElementById("diameter");
+      elementDiameter.addEventListener("input", submit);
+
+      const elementWidth = document.getElementById("width");
+      elementWidth.addEventListener("keyup", submit);
+
+      const elementVerify = document.getElementById("verify");
+      elementVerify.addEventListener("click", submit);
+
+      document.getElementById("send").addEventListener("click", send);
+    </script>
+  </body>
+</html>
